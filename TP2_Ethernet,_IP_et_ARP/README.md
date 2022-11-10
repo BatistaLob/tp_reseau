@@ -84,7 +84,7 @@ Durée approximative des boucles en millisecondes :
 
 Après avoir envoyer un `ping` depuis les deux machines. il en ressort ce PCAP et nous voyons que l'on envoie un `request` et que l'on reçoit un `reply`
 
-[capture PCAP ping](./pcap_ping1.pcapng)
+[capture PCAP ping](pcap_ping1.pcapng)
 
 
 # II. ARP my bro
@@ -167,7 +167,7 @@ Interface : 10.23.3.62 --- 0x8
 * Lorsqu'un message est envoyer pour la première fois entre deux machine, la première machine demande si il y a quelqu'un dans le réseaux qui utilise l'adresse IP mis dans le ping(par exemple). 
 * Celui qui l'utilise repond et donne son adresse MAC. 
 
-[capture ARP](./ARP.pcapng)
+[capture ARP](ARP.pcapng)
 
 # III. DHCP you too my brooo
 
@@ -184,4 +184,4 @@ l'adresse IP que l'on me propose est donc 10.23.3.62
 l'adresse IP de la passerelle du réseau est 10.23.0.1
 l'adresse d'un serveur DNS joignable depuis ce réseau est donc 10.23.0.1
 
-[capture DORA](./DORA1.pcapng)
+[capture DORA](DORA1.pcapng)
