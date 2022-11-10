@@ -73,7 +73,7 @@ tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 26214
 ```
 Pour avoir la visualisation de l'analyse des trames.
 
-[capture tp3 ARP](./tp_reseau/TP3_On_va_router_des_trucs/tp3_arp3.pcapng)
+[capture tp3 ARP](./tp3_arp3.pcapng)
 
 
 # II. Routage
@@ -151,7 +151,7 @@ rtt min/avg/max/mdev = 0.709/1.551/1.943/0.492 ms
 | 3     |     ping       |      10.3.1.11     |     08:00:27:f1:9b:3c       |     10.3.2.12           |     08:00:27:4F:98:65             |
 | 4     |          pong  |      10.3.2.12     |  08:00:27:4F:98:65           |      10.3.1.11          |             08:00:27:f1:9b:3c    |
 
-[capture TP3 routage marcel](.\tp_reseau\TP3_On_va_router_des_trucs\tp3_routage_marcel.pcapng.pcap)
+[capture TP3 routage marcel](.\tp3_routage_marcel.pcapng.pcap)
 
 
 ## 3. Accès internet
@@ -210,7 +210,7 @@ rtt min/avg/max/mdev = 25.569/26.131/26.877/0.549 ms
 |   1       |     ping     |  10.3.1.11   |  08:00:27:f1:9b:3c   |   8.8.8.8  |      08:00:27:4f:98:65    |
 | 2    | pong     |    8.8.8.8   |   08:00:27:4f:98:65  |  10.3.1.11   |  08:00:27:f1:9b:3c     |
 
-[capture tp3 routage internet](./tp_reseau/TP3_On_va_router_des_trucs\tp3_routage_internet1.pcapng.pcap)
+[capture tp3 routage internet](./tp3_routage_internet1.pcapng.pcap)
 
 
 # III. DHCP
@@ -370,4 +370,4 @@ l'IP fournie au client est 10.3.1.3
 l'adresse IP de la passerelle est 10.3.1.254
 l'adresse du serveur DNS que vous proposez au client est 8.8.8.8.
 
-[capture tp3 DHCP](./tp_reseau/TP3_On_va_router_des_trucs\tp3_dhccp.pcap.pcap)
+[capture tp3 DHCP](.\tp3_dhccp.pcap.pcap)

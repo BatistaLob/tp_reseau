@@ -11,7 +11,7 @@ Connexions actives
  TCP    10.33.17.12:55013      162.159.133.234:443    ESTABLISHED
  [Discord.exe]
 ```
-[capture discord](./tp_reseau/TP_4/discord.pcap)
+[capture discord](./discord.pcap)
 
 - Pour FallGuys
 
@@ -24,7 +24,7 @@ Connexions actives
   UDP    0.0.0.0:58346          188.42.41.6:7877         
 ```
 
-[capture FallGuys](./tp_reseau/TP_4/FallGuys.pcap)
+[capture FallGuys](./FallGuys.pcap)
 
 
    - Pour Instagram
@@ -39,7 +39,7 @@ Connexions actives
 [msedge.exe]
 ```
 
-[capture instagram](./tp_reseau/TP_4/instagrma.pcap)
+[capture instagram](./instagrma.pcap)
 
 
 - Pour Zoom
@@ -54,7 +54,7 @@ Connexions actives
   [Zoom.exe]
 ```
 
-[capture Zoom](./tp_reseau/TP_4/Zoom.pcap)
+[capture Zoom](./Zoom.pcap)
 
 
 - PourEdge 
@@ -68,7 +68,7 @@ Connexions actives
   TCP    10.33.17.12:63046      99.83.179.177:443      ESTABLISHED
  [msedge.exe]
 ```
-[capture edge](./tp_reseau/TP_4/Edge.pcap)
+[capture edge](./Edge.pcap)
 
 ## II. Mise en place
 
@@ -76,7 +76,7 @@ Connexions actives
 
 ###  Examinez le trafic dans Wireshark
 
-[capture ssh](./tp_reseau/TP_4/ssh.pcap)
+[capture ssh](./ssh.pcap)
 
 ### Demandez aux OS 
 ```
