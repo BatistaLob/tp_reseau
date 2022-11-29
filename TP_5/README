@@ -1,0 +1,167 @@
+# Sujet Réseau et Infra
+
+## I. Dumb switch 
+
+### 3. Setup topologie 1
+
+```
+PC2> ip 10.5.1.2
+Checking for duplicate address...
+PC1 : 10.5.1.2 255.255.255.0
+
+PC1> ip 10.5.1.1/24
+Checking for duplicate address...
+PC1 : 10.5.1.1 255.255.255.0
+
+PC1> ping 10.5.1.2
+
+84 bytes from 10.5.1.2 icmp_seq=1 ttl=64 time=1.204 ms
+84 bytes from 10.5.1.2 icmp_seq=2 ttl=64 time=1.142 ms
+^C
+```
+
+## II. VLAN
+
+### 3. Setup topologie 2
+
+####  Adressage
+
+```
+PC1> ip 10.5.10.1/24
+Checking for duplicate address...
+PC1 : 10.5.10.1 255.255.255.0
+
+PC2> ip 10.5.10.2/24
+Checking for duplicate address...
+PC2 : 10.5.10.2 255.255.255.0
+
+PC3> ip 10.5.10.3/24
+Checking for duplicate address...
+PC3 : 10.5.10.3 255.255.255.0
+
+PC1> ping 10.5.10.2
+
+84 bytes from 10.5.10.2 icmp_seq=1 ttl=64 time=0.822 ms
+84 bytes from 10.5.10.2 icmp_seq=2 ttl=64 time=0.895 ms
+84 bytes from 10.5.10.2 icmp_seq=3 ttl=64 time=1.004 ms
+^C
+PC2> ping 10.5.10.3
+
+84 bytes from 10.5.10.3 icmp_seq=1 ttl=64 time=1.244 ms
+84 bytes from 10.5.10.3 icmp_seq=2 ttl=64 time=1.380 ms
+84 bytes from 10.5.10.3 icmp_seq=3 ttl=64 time=1.342 ms
+^C
+```
+#### Configuration des VLANs
+
+```
+IOU1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+IOU1(config)#vlan 10
+IOU1(config-vlan)#name admins
+IOU1(config-vlan)#exit
+IOU1(config)#vlan 20
+IOU1(config-vlan)#name guests
+IOU1(config-vlan)#exit
+
+IOU1(config)#interface Ethernet0/0
+IOU1(config)#switchport mode access
+IOU1(config)#switchport access vlan 10
+IOU1(config)#exit
+(pour les 3 ports)
+```
+#### Vérif
+```
+PC1> ping 10.5.10.2
+
+84 bytes from 10.5.10.2 icmp_seq=1 ttl=64 time=0.983 ms
+84 bytes from 10.5.10.2 icmp_seq=2 ttl=64 time=1.265 ms
+^C
+PC1> ping 10.5.10.3
+
+host (10.5.10.3) not reachable
+```
+## III. Routing
+
+####  Adressage
+
+```
+PC1> ip 10.5.10.1/24
+Checking for duplicate address...
+PC1 : 10.5.10.1 255.255.255.0
+
+PC2> ip 10.5.10.2/24
+Checking for duplicate address...
+PC2 : 10.5.10.2 255.255.255.0
+
+adm1> ip 10.5.20.1/24
+Checking for duplicate address...
+adm1 : 10.5.20.1 255.255.255.0
+
+et sur la VM on as mis l'IP : 10.5.30.1/24 
+```
+#### Configuration des VLANs
+
+```
+IOU1#conf t
+IOU1(config)#vlan 10
+IOU1(config-vlan)#name clients
+IOU1(config-vlan)#exit
+IOU1(config)#vlan 20
+IOU1(config-vlan)#name admins
+IOU1(config-vlan)#exit
+IOU1(config)#vlan 30
+IOU1(config-vlan)#name servers
+IOU1(config-vlan)#exit
+IOU1(config-if)#interface Ethernet0/0
+IOU1(config-if)#interface Ethernet0/1
+IOU1(config-if)# switchport mode access
+IOU1(config-if)#switchport access vlan 10
+IOU1(config-if)#exit
+IOU1(config)#interface Ethernet0/2
+IOU1(config-if)#switchport mode access
+IOU1(config-if)#switchport access vlan 20
+IOU1(config-if)#exit
+IOU1(config)#interface Ethernet0/3
+IOU1(config-if)#switchport mode access
+IOU1(config-if)#switchport access vlan 30
+IOU1(config-if)#exit
+IOU1# conf t
+IOU1(config)# interface fastEthernet1/0
+IOU1(config-if)# switchport trunk encapsulation dot1q
+IOU1(config-if)# switchport mode trunk
+IOU1(config-if)# switchport trunk allowed vlan add 10,20,30
+IOU1(config-if)# exit
+IOU1(config)# exit
+
+```
+```
+IOU1#show vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et1/1, Et1/2, Et1/3, Et2/0
+                                                Et2/1, Et2/2, Et2/3, Et3/0
+                                                Et3/1, Et3/2, Et3/3
+10   clients                          active    Et0/0, Et0/1
+20   admins                           active    Et0/2
+30   servers                          active    Et0/3
+1002 fddi-default                     act/unsup
+1003 token-ring-default               act/unsup
+1004 fddinet-default                  act/unsup
+1005 trnet-default                    act/unsup
+IOU1#show interface trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Et1/0       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Et1/0       1-4094
+
+Port        Vlans allowed and active in management domain
+Et1/0       1,10,20,30
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Et1/0       1,10,20,30
+
+```
