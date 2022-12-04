@@ -165,3 +165,81 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Et1/0       1,10,20,30
 
 ```
+#### Config du routeur
+
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface fastEthernet 0/0.10
+R1(config-subif)#encapsulation dot1Q 10
+R1(config-subif)#ip addr 10.5.10.254 255.255.255.0
+R1(config-subif)#exit
+R1(config)#interface fastEthernet 0/0.20
+R1(config-subif)#encapsulation dot1Q 20
+R1(config-subif)#ip addr 10.5.20.254 255.255.255.0
+R1(config-subif)#exit
+R1(config)#interface fastEthernet 0/0.30
+R1(config-subif)#encapsulation dot1Q 30
+R1(config-subif)#ip addr 10.5.30.254 255.255.255.0
+R1(config-subif)#exit
+```
+
+#### Verif
+ajout des routes par default 
+
+```
+PC1> ip 10.5.10.1/10.5.10.254
+Checking for duplicate address...
+PC1 : 10.5.10.1 255.255.255.0 gateway 10.5.10.254
+
+PC2> ip 10.5.10.2/10.5.10.254
+Checking for duplicate address...
+PC2 : 10.5.10.2 255.255.255.0 gateway 10.5.10.254
+
+adm1> ip 10.5.20.1/10.5.20.254
+Checking for duplicate address...
+adm1 : 10.5.20.1 255.255.255.0 gateway 10.5.20.254
+```
+
+
+
+
+```
+R1#conf t
+R1(config)#interface fastEthernet 0/0
+R1(config-if)#duplex full
+R1(config-if)#exit
+R1(config)#exit
+
+IOU1#conf t
+IOU1(config)#interface Ethernet 1/0
+IOU1(config-if)#duplex full
+IOU1(config-if)#exit
+IOU1(config)#exit
+
+PC1> ping 10.5.10.2
+
+84 bytes from 10.5.10.2 icmp_seq=1 ttl=64 time=0.373 ms
+84 bytes from 10.5.10.2 icmp_seq=2 ttl=64 time=0.675 ms
+^C
+PC1> ping 10.5.20.1
+
+84 bytes from 10.5.20.1 icmp_seq=3 ttl=63 time=15.128 ms
+84 bytes from 10.5.20.1 icmp_seq=4 ttl=63 time=27.826 ms
+^C
+
+PC1>ping 10.5.30.1
+
+84 bytes from 10.5.30.1 icmp_seq=2 ttl=63 time=15.131 ms
+84 bytes from 10.5.30.1 icmp_seq=3 ttl=63 time=18.974 ms
+84 bytes from 10.5.30.1 icmp_seq=4 ttl=63 time=14.281 ms
+^C
+
+adm1> ping 10.5.30.1
+
+84 bytes from 10.5.30.1 icmp_seq=1 ttl=63 time=19.573 ms
+84 bytes from 10.5.30.1 icmp_seq=2 ttl=63 time=14.884 ms
+^C
+```
+
+## IV. NAT
